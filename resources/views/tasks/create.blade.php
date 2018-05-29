@@ -4,10 +4,13 @@
 
     <h1>Create page</h1>
     
-    {!! Form::model($task, ['route' => 'tasks.store'] !!}
+    {!! Form::model($task, ['route' => 'tasks.store']) !!}
     
         {!! Form::label('content', 'task:') !!}
         {!! Form::text('content') !!}
+        
+        {!! Form::label('status', 'status:') !!}
+        {!! Form::text('status') !!}
         
         {!! Form::submit('submit') !!}
         

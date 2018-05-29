@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests;
+
+use App\Task;
+
+
 class TasksController extends Controller
 {
     /**
@@ -42,7 +47,13 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'content' => 'required',
+            'status' => 'required|max:10',
+        ]);
+        
         $task = new Task;
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
         
@@ -77,19 +88,27 @@ class TasksController extends Controller
         return view('tasks.edit', [
             'task' => $task,
         ]);
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
+        //return redirect('/');
+        $this->validate($request, [
+            'content' => 'required',
+            'status' => 'required|max:10',
+        ]);
+        //return redirect('/');
         $task = Task::find($id);
         $task->content = $request->content;
+        $task->status = $request->status;
         $task->save();
         
         return redirect('/');
