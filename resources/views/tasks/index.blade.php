@@ -18,7 +18,16 @@
                 <tr>
                     <td>{!! link_to_route('tasks.show', $task->id, ['id' => $task->id]) !!}</td>
                     <td>{{ $task->content }}</td>
-                    <td>{{ $task->status }}</td>
+                    <td>
+                        @if ($task->status=="no touch") 
+                            <button class="btn btn-danger">{{ $task->status }}</button>
+                        @elseif($task->status=="working")
+                            <button class="btn btn-warning">{{ $task->status }}</button>
+                        @else
+                            <button class="btn btn-success">{{ $task->status }}</button>
+                        @endif
+                        
+                    </td>
                 </tr>
             @endforeach
         </tbody>
