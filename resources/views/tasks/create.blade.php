@@ -4,18 +4,26 @@
 
     <h1>Create page</h1>
     
-    {!! Form::model($task, ['route' => 'tasks.store']) !!}
+    <div class="row">
+        <div class="col-xs-12, col-sm-offset-2 col-sm-8, col-lg-offset-3 col-lg-6">
+            {!! Form::model($task, ['route' => 'tasks.store']) !!}
+            
+                <div class="form-group">
+                    {!! Form::label('content', 'task:') !!}
+                    {!! Form::text('content', null, ['class' => 'form-control']) !!}
+                </div>
+                
+                <div class="form-group">
+                    {!! Form::label('status', 'status:') !!}
+                    {!! Form::text('status', null, ['class' => 'form-control']) !!}
+                </div>
+                
+                {!! Form::submit('submit', ['class' => 'btn btn-primary']) !!}
+                
+            {!! Form::close() !!}
+        </div>
+    </div>
     
-        {!! Form::label('content', 'task:') !!}
-        {!! Form::text('content') !!}
-        
-        {!! Form::label('status', 'status:') !!}
-        {!! Form::text('status') !!}
-        
-        {!! Form::submit('submit') !!}
-        
-    {!! Form::close() !!}
-
-<!-- Write content for each page here -->
-
+    
+ <!--Write content for each page here -->
 @endsection
