@@ -18,6 +18,9 @@
                     {!! Form::open(['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
                     {!! Form::close() !!}
+                    {!! Form::open(['route' => ['tasks.edit', $task->id], 'method' => 'get']) !!}
+                        {!! Form::submit('Edit', ['class' => 'btn btn-success btn-xs']) !!}
+                    {!! Form::close() !!}
                 @endif
             </div>
         </div>

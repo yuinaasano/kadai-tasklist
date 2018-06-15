@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (Auth::id() == $task->user_id)
     <h1>Create page</h1>
     
     <div class="row">
@@ -25,6 +25,9 @@
                 {!! Form::submit('submit', ['class' => 'btn btn-primary']) !!}
                 
             {!! Form::close() !!}
+            @else
+            {!! redirect('/'); !!}
+            @endif
         </div>
     </div>
     
