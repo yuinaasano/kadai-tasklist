@@ -135,7 +135,9 @@ class TasksController extends Controller
         $task->status = $request->status;
         $task->save();
 
-             return redirect('/');
+        return redirect('/');
+        }else{
+            return redirect('/');
         }
     }
 
@@ -152,6 +154,8 @@ class TasksController extends Controller
         if (\Auth::id() === $task->user_id) {
             $task->delete();
         }
+        return redirect('/');
+    }else{
         return redirect('/');
     }
 }
