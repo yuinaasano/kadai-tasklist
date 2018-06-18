@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-@if (Auth::id() == $task->user_id)
     
     <h1>id: {{ $task->id }} edit page</h1>
     <div class="row">
@@ -20,9 +19,6 @@
                 {!! Form::submit('update', ['class' => 'btn btn-default']) !!}
                 
             {!! Form::close() !!}
-            @else
-            {!! redirect('/'); !!}
-            @endif
         </div>
     </div>
 

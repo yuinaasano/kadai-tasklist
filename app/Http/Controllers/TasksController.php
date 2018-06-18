@@ -18,7 +18,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-            $data = [];
+        $data = [];
         if (\Auth::check()) {
             $user = \Auth::user();
             $tasks = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
@@ -34,7 +34,6 @@ class TasksController extends Controller
         }
     }
     
-
     /**
      * Show the form for creating a new resource.
      *
@@ -42,8 +41,9 @@ class TasksController extends Controller
      */
     public function create()
     {
-        $task = new Task;
         
+         $task = new Task;
+
         return view('tasks.create', [
             'task' => $task,
         ]);
@@ -57,15 +57,17 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+       $this->validate($request, [
             'content' => 'required|max:191',
             'status' => 'required|max:10',
         ]);
-        
+
+
         $request->user()->tasks()->create([
             'content' => $request->content,
             'status' => $request->status,
         ]);
+
 
         return redirect()->back();
     }
@@ -79,10 +81,14 @@ class TasksController extends Controller
     public function show($id)
     {
         $task = Task::find($id);
+        if (\Auth::id() == $task->user_id){
         
         return view('tasks.show', [
             'task' => $task,
         ]);
+        } else {
+             return redirect('/');
+        }
     }
 
     /**
@@ -93,11 +99,17 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        $task = Task::find($id);
         
+         $task = Task::find($id);
+          if (\Auth::id() == $task->user_id){
+
         return view('tasks.edit', [
             'task' => $task,
         ]);
+          } else {
+             return redirect('/');
+        }
+        
         
     }
 
@@ -105,23 +117,26 @@ class TasksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //return redirect('/');
-        $this->validate($request, [
-            'content' => 'required',
-            'status' => 'required|max:10',
+        $this->validate($request, [ 
+            'content' => 'required|max:191',
+            'status'=> 'required|max:10',
         ]);
-        //return redirect('/');
+
+
         $task = Task::find($id);
+         if (\Auth::id() == $task->user_id){
+        
         $task->content = $request->content;
         $task->status = $request->status;
         $task->save();
-        
-        return redirect('/');
+
+             return redirect('/');
+        }
     }
 
     /**
@@ -132,12 +147,11 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-         $task = \App\Task::find($id);
+       $task = \App\Task::find($id);
 
         if (\Auth::id() === $task->user_id) {
             $task->delete();
         }
-
-        return redirect()->back();
+        return redirect('/');
     }
 }
